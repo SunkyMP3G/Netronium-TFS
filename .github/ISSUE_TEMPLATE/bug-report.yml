@@ -1,0 +1,32 @@
+name: Bug Report
+description: Report the bug here
+labels: ["Bug"]
+assignees:
+  - SunkyMP3G
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the bug here
+      placeholder: Bug description
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Mod version
+      description: What version of the mod are you playing?
+      multiple: false
+      options:
+        - CU-1.0
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Other
+      description: Are you sure no one has reported this bug? Check [these issues](https://github.com/SunkyMP3G/NetroniumMod/issues?q=is%3Aissue)
+      options:
+        - label: I checked other issues to make sure this bug isn't reported or/and fixed
+          required: true
