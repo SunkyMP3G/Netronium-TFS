@@ -16,10 +16,10 @@ body:
     id: version
     attributes:
       label: Mod version
-      description: What version of the mod are you playing?
+      description: What version/content update of the mod are you playing?
       multiple: false
       options:
-        - CU-1.0
+        - CU-1
     validations:
       required: true
   - type: checkboxes
