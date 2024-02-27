@@ -3,6 +3,7 @@ description: Report the bug here
 labels: ["Bug"]
 assignees:
   - SunkyMP3G
+milestones: ["CU-1"]
 body:
   - type: textarea
     id: description
