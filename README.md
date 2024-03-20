@@ -1,4 +1,4 @@
-![logo](https://github.com/SunkyMP3G/NetroniumMod/assets/125795960/468e2b33-ab49-4c27-9072-e430d966d0ac)
+![logo](https://github.com/SunkyMP3G/NetroniumMod/assets/125795960/6f526f56-470f-4489-a48d-d740d34aaeda)
 
 *The abandoned planet, surrounded by a dome, is waiting for you...*
 
