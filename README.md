@@ -12,3 +12,10 @@ Plans: https://github.com/users/SunkyMP3G/projects/10
 
 ### [Our Discord server](https://discord.com/invite/nbK62FGEMu)
 Spoilers, lore library, new releases, and chat!
+
+### Branches
+#### Main
+Main code downloadable by the game, also contains tools for github
+
+#### Dev
+All code firstly goes here to not break mod download system, syncs with main branch at releases or content updates
