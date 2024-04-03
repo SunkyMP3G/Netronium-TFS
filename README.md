@@ -13,6 +13,14 @@ Plans: https://github.com/users/SunkyMP3G/projects/10
 ### [Our Discord server](https://discord.com/invite/nbK62FGEMu)
 Spoilers, lore library, new releases, and chat!
 
+### Mod progress (CU-1)
+| Content  |    Status    |
+| -------- | ------------ |
+| Content  | In progress  |
+| Sprites  | In progress  |
+
+---
+
 ### Branches
 #### Main
 Main code downloadable by the game, also contains tools for github
