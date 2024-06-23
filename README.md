@@ -1,29 +1,33 @@
-![logo](https://github.com/SunkyMP3G/NetroniumMod/assets/125795960/6f526f56-470f-4489-a48d-d740d34aaeda)
+![logo](https://github.com/SunkyMP3G/Netronium-TFS/assets/125795960/ced234df-ce58-4878-b920-a0e654338c24)
 
 *The abandoned planet, surrounded by a dome, is waiting for you...*
 
 *Your main mission is to save the planet from invaders, and return life to it*
-
-Plans: https://github.com/users/SunkyMP3G/projects/10
 
 ###### And please, don't steal my sprites
 
 ---
 
 ### [Our Discord server](https://discord.com/invite/nbK62FGEMu)
-Spoilers, lore library, new releases, and chat!
+Spoilers, lore library, new releases, and chat! 
 
 ### Mod progress (CU-1)
-| Content  |    Status    |
-| -------- | ------------ |
-| Content  | In progress  |
-| Sprites  | In progress  |
+|    Content   |    Code    |    Sprites   |    Status    |
+|    :-----:   |    :--:    |    :-----:   | :----------: |
+| Blocks[^1]   | N/A (9/x)  | 33% (3/9)    | In progress  |
+| Units        | 100% (4/4) | 0%  (0/4)    | In progress  |
+| Items        | 66% (2/3)  | 100% (2/2)   | In progress  |
+| Liquids[^1]  | 100% (2/2) | 100% (2/2)   | Done         |
+| Statuses     | 100% (3/3) | 66% (2/3)    | In progress  |
+| Weathers     | 100% (2/2) | N/A          | Done         |
+
+[^1]: Doesn't include environment floors and walls
 
 ---
 
 ### Branches
 #### Main
-Main code downloadable by the game, also contains tools for github
+Main code downloadable by the game, also contains tools for the repo
 
 #### Dev
 All code firstly goes here to not break mod download system, syncs with main branch at releases or content updates
