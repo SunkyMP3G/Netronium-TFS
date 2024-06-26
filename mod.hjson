@@ -1,0 +1,18 @@
+name: "netroniummod"
+repo: "sunkymp3g/Netronium-TFS"
+minGameVersion: 146
+version: "CU-1"
+main: "netro.Netronium"
+
+displayName: "Netronium: The Final Showdown"
+author: "[orange[]]Sunky.MP3G"
+subtitle: "Version: CU-1"
+description:
+
+  '''
+  The mod is empty right now, it's just here for nothing
+  '''
+
+dependencies: []
+hideBrowser: true
+java: true
