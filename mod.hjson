@@ -10,9 +10,11 @@ subtitle: "Version: CU-1"
 description:
 
   '''
-  The mod is empty right now, it's just here for nothing
+  A planet, surrounded by a dome, awaits you...
+  It's a beta version, it doesn't contain much things and has some bad sprites.
+  Our Discord server's link is on GitHub page, go check it!
   '''
 
 dependencies: []
-hideBrowser: true
+hideBrowser: false
 java: true
