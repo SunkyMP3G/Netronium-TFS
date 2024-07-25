@@ -11,15 +11,15 @@
 ### [Our Discord server](https://discord.com/invite/nbK62FGEMu)
 Spoilers, lore library, new releases, and chat! 
 
-### Mod progress (CU-1)
-|    Content   |    Code    |    Sprites   |    Status    |
-|    :-----:   |    :--:    |    :-----:   | :----------: |
-| Blocks[^1]   | TBA (12/x) | 25% (3/12)   | In progress  |
-| Units        | 100% (5/5) | 20%  (1/5)   | In progress  |
-| Items[^1]    | 100% (4/4) | 50% (2/4)    | Done         |
-| Liquids[^1]  | 100% (2/2) | 100% (2/2)   | Done         |
-| Statuses     | 100% (3/3) | 100% (3/3)   | Done         |
-| Weathers     | 100% (2/2) | N/A          | Done         |
+### Mod progress (CU-2)
+|    Content   |    Code    |    Sprites   |  Status  |
+|    :-----:   |    :--:    |    :-----:   |  :----:  |
+| Blocks[^1]   | TBA (x/x)  | TBA (x/x)    | TBA      |
+| Units        | TBA (x/x)  | TBA (x/x)    | TBA      |
+| Items[^1]    | TBA (x/x)  | TBA (x/x)    | TBA      |
+| Liquids[^1]  | TBA (x/x)  | TBA (x/x)    | TBA      |
+| Statuses     | TBA (x/x)  | TBA (x/x)    | TBA      |
+| Weathers     | TBA (x/x)  | N/A          | TBA      |
 
 [^1]: Doesn't include environment floors and walls
 
