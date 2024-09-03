@@ -18,8 +18,8 @@ Spoilers, lore library, new releases, and chat!
 | Units        | TBA (x/x)  | TBA (x/x)    | TBA         |
 | Items[^1]    | TBA (x/x)  | TBA (x/x)    | TBA         |
 | Liquids[^1]  | TBA (x/x)  | TBA (x/x)    | TBA         |
-| Statuses     | 0% (0/3)   | 0%  (0/0)    | In progress |
-| Weathers     | 0% (0/2)   | N/A          | In progress |
+| Statuses     | 100% (3/3) | 66%  (2/3)   | In progress |
+| Weathers     | 100% (2/2) | N/A          | Done        |
 
 [^1]: Doesn't include environment floors and walls
 
