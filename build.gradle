@@ -19,7 +19,7 @@ ext{
     //the build number that this mod is made for
     mindustryVersion = 'v146'
     jabelVersion = "93fde537c7"
-    //windows sucks
+    //windows sucks (no)
     isWindows = System.getProperty("os.name").toLowerCase().contains("windows")
     sdkRoot = System.getenv("ANDROID_HOME") ?: System.getenv("ANDROID_SDK_ROOT")
 }
@@ -69,7 +69,7 @@ task jarAndroid{
 }
 
 jar{
-    archiveFileName = "${base.archivesBaseName}Mod.jar"
+    archiveFileName = "${base.archivesBaseName}Desktop.jar"
 
     from{
         configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
@@ -89,12 +89,12 @@ task deploy(type: Jar){
     dependsOn jar
     archiveFileName = "${base.archivesBaseName}.jar"
 
-    from{ [zipTree("$buildDir/libs/${project.archivesBaseName}Mod.jar"), zipTree("$buildDir/libs/${project.archivesBaseName}ModAnd.jar")] }
+    from{ [zipTree("$buildDir/libs/${project.archivesBaseName}Desktop.jar"), zipTree("$buildDir/libs/${project.archivesBaseName}Android.jar")] }
 
     doLast{
         delete{
-            delete "$buildDir/libs/${project.archivesBaseName}Mod.jar"
-            delete "$buildDir/libs/${project.archivesBaseName}ModAnd.jar"
+            delete "$buildDir/libs/${project.archivesBaseName}Desktop.jar"
+            delete "$buildDir/libs/${project.archivesBaseName}Android.jar"
         }
     }
 }
