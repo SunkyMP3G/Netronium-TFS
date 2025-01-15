@@ -11,23 +11,4 @@
 ### [Our Discord server](https://discord.com/invite/nbK62FGEMu)
 Spoilers, lore library, new releases, and chat! 
 
-### Mod progress (CU-2)
-|    Content   |    Code    |    Sprites   |    Status   |
-|    :-----:   |    :--:    |    :-----:   |    :----:   |
-| Blocks[^1]   | TBA (x/x)  | TBA (x/x)    | TBA         |
-| Units        | TBA (x/x)  | TBA (x/x)    | TBA         |
-| Items[^1]    | TBA (x/x)  | TBA (x/x)    | TBA         |
-| Liquids[^1]  | TBA (x/x)  | TBA (x/x)    | TBA         |
-| Statuses     | 100% (3/3) | 66%  (2/3)   | In progress |
-| Weathers     | 100% (2/2) | N/A          | Done        |
-
-[^1]: Doesn't include environment floors and walls
-
 ---
-
-### Branches
-#### Main
-Main code downloadable by the game, also contains tools for the repo
-
-#### Dev
-All code firstly goes here to not break mod download system, syncs with main branch at releases or content updates
