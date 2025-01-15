@@ -1,25 +1,31 @@
 package netro.content;
 
 import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
+import arc.math.Mathf;
 import arc.struct.Seq;
-import classes.NetroCoreBlock;
+import classes.*;
 import mindustry.content.*;
 import mindustry.entities.bullet.*;
+import mindustry.entities.effect.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
-import static mindustry.type.ItemStack.with;
+import static mindustry.type.ItemStack.*;
 import mindustry.world.*;
 import mindustry.world.blocks.defense.*;
 import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.*;
-import mindustry.world.blocks.liquid.Conduit;
-import mindustry.world.blocks.liquid.LiquidRouter;
+import mindustry.world.blocks.liquid.*;
+import mindustry.world.blocks.logic.LogicBlock;
+import mindustry.world.blocks.logic.MemoryBlock;
+import mindustry.world.blocks.logic.MessageBlock;
+import mindustry.world.blocks.logic.SwitchBlock;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.units.*;
-import mindustry.world.consumers.ConsumeLiquid;
+import mindustry.world.consumers.*;
 import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 
@@ -27,7 +33,7 @@ public class NetroBlocks {
     public static Block
 
     // Environment floors
-    grassFloor, stoneFloor,
+    grassFloor, stoneFloor, iceFloor,
 
     // Ores
     oreIron, oreAlum,
@@ -38,6 +44,12 @@ public class NetroBlocks {
     // Environment walls
     grassWall, stoneOreWall,
 
+    // Lab and SSS environment
+    techFloor1, techFloor2, techFloor3,
+
+    // Ocean base environment
+    oceanGridAcid, oceanGridAcidStairsH, oceanGridAcidStairsV,
+
     // Cores
     coreHusk,
 
@@ -45,25 +57,30 @@ public class NetroBlocks {
     ironConveyor, ironRouter, ironUndConveyor,
 
     //Drills
-    ironDrill,
+    ironDrill, steelDrill,
 
     // Liquids
     alumPump, alumPipe, alumRouter, //TODO underground pipes
 
     // Factories
-    ironSmelter, alloyFurnace, acidCleaner,
+    alloyFurnace, steelFurnace, acidCleaner,
 
     // Energy
     ironNode,
 
     // Turrets
-    origin, tesla,
+    origin, tesla, volcano, //Volcano is a turret. Change my mind
 
     // Walls
-    ironWall, largeIronWall,
+    ironWall, largeIronWall, steelWall, largeSteelWall,
 
     // Unit crafters
     ironassembler,
+
+    // Logic
+    netroProcessor, netroMessage, netroCell, netroSwitch,
+
+    // Corrupted blocks... soon
 
     // Editor only
     supersteelWall, largeSupersteelWall;
@@ -78,9 +95,15 @@ public class NetroBlocks {
             variants = 3;
         }};
 
+        iceFloor = new Floor("ice-floor"){{
+            variants = 3;
+            speedMultiplier = 0.9f;
+            dragMultiplier = 0.01f;
+        }};
+
 
         // Ores
-        oreIron = new OreBlock("ore-iron", NetroItems.ironOre){{
+        oreIron = new OreBlock("ore-iron", NetroItems.ironIngot){{
             variants = 2;
         }};
 
@@ -127,9 +150,41 @@ public class NetroBlocks {
         }};
 
 
+        // Lab and SSS environment
+        techFloor1 = new Floor("tech-floor-1"){{
+            variants = 0;
+        }};
+
+        techFloor2 = new Floor("tech-floor-2"){{
+            variants = 0;
+        }};
+
+        techFloor3 = new Floor("tech-floor-3"){{
+            variants = 0;
+        }};
+
+
+        // Ocean environment
+        oceanGridAcid = new Floor("ocean-grid-acid"){{
+            variants = 0;
+        }};
+
+        oceanGridAcidStairsH = new Floor("ocean-grid-stairs-H-acid"){{
+            variants = 0;
+            blendGroup = oceanGridAcid;
+            speedMultiplier = 0.9f;
+        }};
+
+        oceanGridAcidStairsV = new Floor("ocean-grid-stairs-V-acid"){{
+            variants = 0;
+            blendGroup = oceanGridAcid;
+            speedMultiplier = 0.9f;
+        }};
+
+
         // Cores
         coreHusk = new NetroCoreBlock("core-husk"){{
-            requirements(Category.effect, with(NetroItems.ironOre, 600, NetroItems.ironIngot, 300));
+            requirements(Category.effect, with(NetroItems.ironIngot, 700));
 
             isFirstTier = true;
             unitType = NetroUnits.unite;
@@ -140,7 +195,7 @@ public class NetroBlocks {
             thrusterLength = 12/2f;
             alwaysUnlocked = true;
             requiresCoreZone = true;
-            powerProduction = 25f;
+            powerProduction = 50 / 60f;
             squareSprite = false;
 
             unitCapModifier = 10;
@@ -149,7 +204,7 @@ public class NetroBlocks {
 
         // Transport
         ironConveyor = new Conveyor("iron-conveyor"){{
-            requirements(Category.distribution, with(NetroItems.ironOre, 1));
+            requirements(Category.distribution, with(NetroItems.ironIngot, 1));
             health = 10;
             speed = 0.03f;
             displayedSpeed = 4.2f;
@@ -157,13 +212,13 @@ public class NetroBlocks {
         }};
 
         ironRouter = new Router("iron-router"){{
-            requirements(Category.distribution, with(NetroItems.ironOre, 3));
+            requirements(Category.distribution, with(NetroItems.ironIngot, 3));
             health = 20;
             underBullets = true;
         }};
 
         ironUndConveyor = new DuctBridge("iron-und-conveyor"){{
-            requirements(Category.distribution, with(NetroItems.ironOre, 10));
+            requirements(Category.distribution, with(NetroItems.ironIngot, 20));
             health = 30;
             range = 4;
             speed = 0.03f;
@@ -173,22 +228,32 @@ public class NetroBlocks {
 
         //Drills
         ironDrill = new Drill("iron-drill"){{
-        requirements(Category.production, with(NetroItems.ironOre, 20));
-        consumePower(0.1f);
+            requirements(Category.production, with(NetroItems.ironIngot, 40));
+            drillTime = 200f;
+            tier = 2;
+            health = 100;
+            size = 2;
+            squareSprite = false;
+            hasLiquids = false;
+            liquidBoostIntensity = 1f;
+        }};
 
-        drillTime = 180f;
-        tier = 2;
-        health = 100;
-        size = 2;
-        squareSprite = false;
-        hasLiquids = false;
-        liquidBoostIntensity = 1f;
+        steelDrill = new Drill("steel-drill"){{
+            requirements(Category.production, with(NetroItems.steelIngot, 30));
+            consumePower(1 / 60f);
+            drillTime = 140f;
+            tier = 4;
+            health = 200;
+            size = 2;
+            squareSprite = false;
+            hasLiquids = false;
+            liquidBoostIntensity = 1f;
         }};
 
 
         //Liquids
         alumPump = new Pump("aluminium-pump"){{
-            requirements(Category.liquid, with(NetroItems.ferroAluminium, 6));
+            requirements(Category.liquid, with(NetroItems.ferroAluminium, 10));
             consumePower(0.1f);
             underBullets = true;
             pumpAmount = 5f / 60f;
@@ -211,25 +276,6 @@ public class NetroBlocks {
 
 
         // Factories
-        ironSmelter = new GenericCrafter("iron-smelter"){{
-            requirements(Category.crafting, with(NetroItems.ironOre, 70));
-            health = 150;
-            craftEffect = Fx.none;
-            outputItem = new ItemStack(NetroItems.ironIngot, 1);
-            craftTime = 40f;
-            size = 2;
-            hasPower = true;
-            hasLiquids = false;
-            itemCapacity = 10;
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawArcSmelt(), new DrawDefault());
-            ambientSound = Sounds.smelter;
-            ambientSoundVolume = 0.12f;
-            squareSprite = false;
-
-            consumeItems(with(NetroItems.ironOre, 2));
-            consumePower(1f);
-        }};
-
         alloyFurnace = new GenericCrafter("alloy-furnace"){{
             requirements(Category.crafting, with(NetroItems.ironIngot, 90));
             health = 200;
@@ -245,8 +291,28 @@ public class NetroBlocks {
             ambientSoundVolume = 0.12f;
             squareSprite = false;
 
-            consumeItems(with(NetroItems.ironOre, 2, NetroItems.aluminium, 2));
-            consumePower(3f);
+            consumeItems(with(NetroItems.ironIngot, 6, NetroItems.aluminium, 2));
+            consumePower(1 / 60f);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawArcSmelt(), new DrawDefault());
+        }};
+
+        steelFurnace = new GenericCrafter("steel-furnace"){{
+            requirements(Category.crafting, with(NetroItems.ironIngot, 180, NetroItems.ferroAluminium, 60, NetroItems.netroCopper, 50));
+            health = 400;
+            craftEffect = Fx.none;
+            outputItem = new ItemStack(NetroItems.steelIngot, 1);
+            craftTime = 300f;
+            size = 3;
+            hasPower = true;
+            hasLiquids = false;
+            itemCapacity = 40;
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawFlame(), new DrawDefault());
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.12f;
+            squareSprite = false;
+
+            consumeItems(with(NetroItems.ironIngot, 20, NetroItems.aluminium, 10, NetroItems.netroCopper, 10));
+            consumePower(3 / 60f);
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawArcSmelt(), new DrawDefault());
         }};
 
@@ -255,7 +321,7 @@ public class NetroBlocks {
             health = 100;
             size = 2;
             consumeLiquid(NetroLiquids.acid, 10f / 60f);
-            consumePower(1f);
+            consumePower(2 / 60f);
             liquidCapacity = 30f;
             outputLiquids = LiquidStack.with(NetroLiquids.cleanWater, 10f / 60f);
             squareSprite = false;
@@ -266,19 +332,19 @@ public class NetroBlocks {
 
         // Energy
         ironNode = new BeamNode("iron-node"){{
-            requirements(Category.power, with(NetroItems.ironOre, 6));
+            requirements(Category.power, with(NetroItems.ironIngot, 10));
             consumesPower = outputsPower = true;
             health = 40;
             range = 5;
-            consumePowerBuffered(100f);
+            consumePowerBuffered(0f);
         }};
 
 
         // Turrets
         origin = new ItemTurret("origin"){{
-            requirements(Category.turret, with(NetroItems.ironOre, 75, NetroItems.ironIngot, 40));
+            requirements(Category.turret, with(NetroItems.ironIngot, 70));
             ammo(
-                    NetroItems.ironOre, new BasicBulletType(6f, 15){{
+                    NetroItems.ironIngot, new BasicBulletType(6f, 15){{
                         width = 8f;
                         height = 10f;
                         lifetime = 19f;
@@ -303,13 +369,13 @@ public class NetroBlocks {
         }};
 
         tesla = new PowerTurret("tesla"){{
-            requirements(Category.turret, with(NetroItems.ironIngot, 80));
+            requirements(Category.turret, with(NetroItems.ironIngot, 150));
             shootType = new LightningBulletType(){{
                 damage = 10;
                 lightningLength = 20;
                 collidesAir = false;
                 ammoMultiplier = 1f;
-                consumePower(2f);
+                consumePower(4 / 60f);
                 shootX = shootY = 0f;
 
                 lightningType = new BulletType(0.0001f, 0f){{
@@ -326,7 +392,7 @@ public class NetroBlocks {
             }};
             reload = 60f; //1 sec
             shootCone = 40f;
-            rotateSpeed = Float.POSITIVE_INFINITY; //rotation isn't seen, so, the rotate speed is useless
+            rotateSpeed = Float.POSITIVE_INFINITY;
             targetAir = false;
             drawer = new DrawTurret("tesla-");
             range = 125f;
@@ -337,6 +403,64 @@ public class NetroBlocks {
             shootSound = Sounds.spark;
             coolant = consume(new ConsumeLiquid(NetroLiquids.cleanWater, 15f / 60f));
             coolantMultiplier = 2f;
+        }};
+
+        volcano = new PowerTurret("volcano"){{
+            requirements(Category.turret, with());
+            size = 4;
+            health = 9999;
+            armor = 9999f;
+            targetable = destructible = false;
+            range = 2000f;
+            recoil = 0f;
+            reload = 60f; // It will be controlled by world processor
+            shootX = shootY = 0f;
+            buildVisibility = BuildVisibility.sandboxOnly;
+            rotateSpeed = Float.POSITIVE_INFINITY;
+            drawer = new DrawTurret("volcanomouth-");
+            ammoPerShot = 0;
+            consumesPower = false;
+            shootType = new BasicBulletType(0f, 0){{
+                lifetime = 1f;
+                ammoMultiplier = 0f;
+                Draw.color(Color.black);
+                Draw.z(121);
+                shootEffect = new MultiEffect(Fx.titanExplosion, Fx.titanSmoke);
+                shootSound = Sounds.titanExplosion;
+                    reloadMultiplier = 1f;
+                    despawnEffect = hitEffect = Fx.none;
+                    width = 0f;
+                    height = 0f;
+                    fragBullets = 12;
+                    fragBullet = new BasicBulletType(3f, 400f){{
+                        health = 200;
+                        hittable = true;
+                        width = 24f;
+                        height = 24f;
+                        lifetime = 150f;
+                        splashDamage = 110f;
+                        splashDamageRadius = 64f;
+                        pierce = true;
+                        pierceCap = 4;
+                        pierceBuilding = false;
+                        pierceDamageFactor = 0.9f;
+                        backColor = hitColor = trailColor = Color.valueOf("ea8878").lerp(Pal.redLight, 0.5f);
+                        frontColor = Color.white;
+                        trailLength = 32;
+                        trailWidth = 3.35f;
+                        trailSinScl = 2.5f;
+                        trailSinMag = 0.5f;
+                        trailEffect = Fx.none;
+                        despawnShake = 7f;
+                        Draw.color(Color.orange);
+                        despawnEffect = hitEffect = new MultiEffect(Fx.titanExplosion, Fx.titanSmoke);
+                        despawnSound = hitSound = Sounds.shootBig;
+                        trailInterp = v -> Math.max(Mathf.slope(v), 0.8f);
+                        shrinkY = 0.45f;
+                        collidesGround = true;
+                        collidesAir = true;
+                    }};
+                }};
         }};
 
         // Walls
@@ -354,19 +478,59 @@ public class NetroBlocks {
             size = 2;
         }};
 
+        steelWall = new Wall("steel-wall"){{
+            requirements(Category.defense, with(NetroItems.steelIngot, 3));
+            health = 200;
+            armor = 1f;
+            size = 1;
+        }};
+
+        largeSteelWall = new Wall("large-steel-wall"){{
+            requirements(Category.defense, with(NetroItems.steelIngot, 12));
+            health = 800;
+            armor = 1f;
+            size = 2;
+        }};
+
 
         // Unit crafters
         ironassembler = new UnitFactory("iron-assembler"){{
-            requirements(Category.units, with(NetroItems.ironOre, 90, NetroItems.ironIngot, 60));
+            requirements(Category.units, with(NetroItems.ironIngot, 130));
             health = 200;
             plans = Seq.with(
-                    new UnitPlan(NetroUnits.hope, 60f * 30, with(NetroItems.ironIngot, 40)),
-                    new UnitPlan(NetroUnits.spark, 60f * 25, with(NetroItems.ironIngot, 30)),
-                    new UnitPlan(NetroUnits.kamikaze, 60f * 15, with(NetroItems.ironIngot, 20)),
-                    new UnitPlan(NetroUnits.plasma, 60f * 40, with(NetroItems.ironIngot, 60, NetroItems.ferroAluminium, 30))
+                    new UnitPlan(NetroUnits.hope, 60f * 50, with(NetroItems.ironIngot, 50)),
+                    new UnitPlan(NetroUnits.spark, 60f * 30, with(NetroItems.ironIngot, 30)),
+                    new UnitPlan(NetroUnits.kamikaze, 60f * 20, with(NetroItems.ironIngot, 20)),
+                    new UnitPlan(NetroUnits.plasma, 60f * 75, with(NetroItems.ironIngot, 75, NetroItems.ferroAluminium, 40))
             );
             size = 3;
-            consumePower(2.5f);
+            consumePower(3 / 60f);
+        }};
+
+        // Logic
+        netroProcessor = new LogicBlock("netro-processor"){{
+            requirements(Category.logic, with(NetroItems.netroCopper, 90, NetroItems.ironIngot, 140, NetroItems.ferroAluminium, 60));
+            health = 80;
+
+            instructionsPerTick = 2;
+            range = 8 * 8;
+        }};
+
+        netroMessage = new MessageBlock("netro-message"){{
+            requirements(Category.logic, with(NetroItems.netroCopper, 30, NetroItems.ironIngot, 50));
+            health = 40;
+        }};
+
+        netroSwitch = new SwitchBlock("netro-switch"){{
+            requirements(Category.logic, with(NetroItems.netroCopper, 15, NetroItems.ironIngot, 30));
+            health = 40;
+        }};
+
+        netroCell = new MemoryBlock("netro-cell"){{
+            requirements(Category.logic, with(NetroItems.netroCopper, 25, NetroItems.ironIngot, 50));
+            health = 100;
+
+            memoryCapacity = 8;
         }};
 
 

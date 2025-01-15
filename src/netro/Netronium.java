@@ -4,6 +4,7 @@ import arc.util.*;
 import mindustry.mod.*;
 
 import netro.content.*;
+@SuppressWarnings("unused")
 
 public class Netronium extends Mod{
     @Override
@@ -14,6 +15,9 @@ public class Netronium extends Mod{
         NetroUnits.load();
         NetroBlocks.load();
         NetroWeathers.load();
-        Log.info("Netronium mod (CU-1) is loaded successfully!");
+        NetroPlanets.load();
+        // NetroSectors.load();
+        NetroTechTree.load();
+        Log.info("Netronium mod (CU-2) is loaded successfully!");
     }
 }

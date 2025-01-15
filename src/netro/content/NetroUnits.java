@@ -10,7 +10,6 @@ import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.ai.types.*;
 import mindustry.type.weapons.*;
-//@SuppressWarnings("all")
 
 public class NetroUnits {
     public static UnitType
@@ -19,7 +18,10 @@ public class NetroUnits {
     unite,
 
     //T1
-    hope, spark, kamikaze, plasma;
+    hope, spark, kamikaze, plasma,
+
+    // Story
+    shardedLeader, shardedSoldier;
 
     public static void load() {
 
@@ -181,7 +183,7 @@ public class NetroUnits {
             hitSize = 9f;
             health = 200;
             armor = 3f;
-            speed = 0.68f;
+            speed = 0.74f;
             flying = false;
             this.constructor = MechUnit::create;
             itemCapacity = 0;
@@ -197,5 +199,32 @@ public class NetroUnits {
                 width = 4f;
                 whenShooting = false;
             }});
+        }};
+
+        // Story
+        shardedLeader = new NetroUnitType("sharded-leader"){{
+            hitSize = 8f;
+            health = 9999;
+            armor = 9999f;
+            speed = 1f;
+            flying = false;
+            this.constructor = MechUnit::create;
+            itemCapacity = 0;
+
+            targetable = false;
+            hittable = false;
+        }};
+
+        shardedSoldier = new NetroUnitType("sharded-soldier"){{
+            hitSize = 8f;
+            health = 9999;
+            armor = 9999f;
+            speed = 1f;
+            flying = false;
+            this.constructor = MechUnit::create;
+            itemCapacity = 0;
+
+            targetable = false;
+            hittable = false;
         }};
     }}

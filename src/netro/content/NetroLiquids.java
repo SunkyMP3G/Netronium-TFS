@@ -7,7 +7,7 @@ import mindustry.type.*;
 public class NetroLiquids {
 
     public static Liquid
-    acid, lava, cleanWater;
+    acid, lava, cleanWater, corruption, neutronium;
 
     public static void load(){
         acid = new Liquid("acid", Color.valueOf("bef574")){{
@@ -36,6 +36,24 @@ public class NetroLiquids {
             barColor = Color.valueOf("7a8cdc");
             effect = StatusEffects.wet; //TODO new status maybe?
             capPuddles = false;
+        }};
+
+        neutronium = new Liquid("neutronium", Color.valueOf("ffa8af")){{
+            gas = true;
+            temperature = 0.5f;
+            viscosity = 0f;
+            heatCapacity = 0f;
+            incinerable = false;
+        }};
+
+        corruption = new CellLiquid("corruption", Color.valueOf("660066")){{
+            temperature = 100f;
+            viscosity = 1.1f;
+            flammability = 100f;
+            heatCapacity = 0f;
+            incinerable = false;
+            capPuddles = false;
+            effect = NetroStatuses.corrupted;
         }};
     }
 }

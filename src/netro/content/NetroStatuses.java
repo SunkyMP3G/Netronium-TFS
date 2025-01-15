@@ -1,12 +1,14 @@
 package netro.content;
 
 import arc.graphics.Color;
+import mindustry.content.StatusEffects;
 import mindustry.graphics.Pal;
 import mindustry.type.StatusEffect;
 
+
 public class NetroStatuses {
     public static StatusEffect
-    corrosion, weakCorrosion, lavaMelting, lavaEruption, shock;
+    corrosion, weakCorrosion, lavaMelting, shock, corrupted, snowy, blizzard;
 
     public static void load(){
         corrosion = new StatusEffect("corrosion"){{ // When you step on the acid floor
@@ -28,12 +30,27 @@ public class NetroStatuses {
             damage = 0.6f;
         }};
 
-        lavaEruption = new StatusEffect("lava-eruption"){{
-            speedMultiplier = 0.4f;
-        }};
-
         shock = new StatusEffect("shock"){{ // Tesla hit status
             speedMultiplier = 0.1f;
         }};
+
+        corrupted = new StatusEffect("corrupted"){{
+            speedMultiplier = 0.66f;
+            healthMultiplier = 0.5f;
+        }};
+
+        snowy = new StatusEffect("snowy"){{ // Snowy weather status
+            speedMultiplier = 0.9f;
+            reloadMultiplier = 0.9f;
+        }};
+
+        blizzard = new StatusEffect("blizzard-status"){{ // Blizzard weather status
+            speedMultiplier = 0.8f;
+            reloadMultiplier = 0.8f;
+        }};
+
+        // Since the campaign will have its own unique bosses, the buff is useless
+        StatusEffects.boss.healthMultiplier = 1;
+        StatusEffects.boss.damageMultiplier = 1;
     }
 }
